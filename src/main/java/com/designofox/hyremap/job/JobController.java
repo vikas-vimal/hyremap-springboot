@@ -1,9 +1,6 @@
 package com.designofox.hyremap.job;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,8 +18,9 @@ public class JobController {
     }
 
     @GetMapping("/jobs/{id}")
-    public Job findOneById(){
-        return null;
+    public Job findOneById(@PathVariable Long id){
+        System.out.println(id);
+        return jobService.findById(id);
     }
 
     @PostMapping("/jobs")
