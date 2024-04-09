@@ -5,6 +5,7 @@ import com.designofox.hyremap.job.JobService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -33,4 +34,45 @@ public class JobServiceImpl implements JobService {
         }
         return null;
     }
+
+    @Override
+    public Job deleteJobById(Long id) {
+        Iterator<Job> iterator = jobsDatabase.iterator();
+        while (iterator.hasNext()){
+            Job job = iterator.next();
+            if(job.getId().equals(id)){
+                iterator.remove();
+                return job;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Job updateJobById(Long id, Job body) {
+        Job foundJob = null;
+        for(Job job: jobsDatabase){
+            if(job.getId().equals(id)){
+                job.setTitle(body.getTitle());
+                job.setDescription(body.getDescription());
+                job.setMinSalary(body.getMinSalary());
+                job.setMaxSalary(body.getMaxSalary());
+                job.setLocation(body.getLocation());
+                foundJob = job;
+            }
+        }
+        return foundJob;
+    }
+
+    public Job deleteJobById_bak(Long id) {
+        Job foundJob = null;
+        for(Job job: jobsDatabase){
+            if(job.getId().equals(id)){
+                foundJob = job;
+                jobsDatabase.remove(job);
+            }
+        }
+        return foundJob;
+    }
+
 }

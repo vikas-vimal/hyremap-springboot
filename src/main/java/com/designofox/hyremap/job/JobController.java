@@ -1,5 +1,7 @@
 package com.designofox.hyremap.job;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,24 +15,45 @@ public class JobController {
     }
 
     @GetMapping("/jobs")
-    public List<Job> findAll(){
-        return jobService.findAll();
+    public ResponseEntity<List<Job>> findAll(){
+        return ResponseEntity.ok(jobService.findAll());
     }
 
     @GetMapping("/jobs/{id}")
-    public Job findOneById(@PathVariable Long id){
-        System.out.println(id);
-        return jobService.findById(id);
+    public ResponseEntity<Job> findOneById(@PathVariable Long id){
+        Job foundJob = jobService.findById(id);
+        if(foundJob != null){
+            return new ResponseEntity<>(foundJob, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/jobs")
-    public String createJob(@RequestBody Job job){
+    public ResponseEntity<String> createJob(@RequestBody Job job){
         boolean result = jobService.createJob(job);
         if(result) {
-            return "Job added successfully!";
+            return new ResponseEntity<>("Job added successfully!", HttpStatus.CREATED);
         }
         else {
-            return "Unable to save Job!";
+            return new ResponseEntity<>("Unable to save Job!", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @DeleteMapping("/jobs/{id}")
+    public ResponseEntity<Job> deleteJobById(@PathVariable Long id){
+        Job deletedJob = jobService.deleteJobById(id);
+        if(deletedJob != null){
+            return ResponseEntity.ok(deletedJob);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/jobs/{id}")
+    public ResponseEntity<Job> updateJobById(@PathVariable Long id, @RequestBody Job body){
+        Job updatedJob = jobService.updateJobById(id, body);
+        if(updatedJob!=null){
+            return new ResponseEntity<>(updatedJob, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
