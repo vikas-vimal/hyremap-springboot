@@ -8,4 +8,5 @@ public interface CompanyService {
     Company createCompany(Company newCompany);
     Company updateCompanyById(Long id, Company body);
     boolean deleteCompanyById(Long id);
+    boolean companyExistsById(Long id);
 }

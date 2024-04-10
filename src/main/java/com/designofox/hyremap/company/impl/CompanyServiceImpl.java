@@ -28,6 +28,11 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
+    public boolean companyExistsById(Long id) {
+        return companyRepository.existsById(id);
+    }
+
+    @Override
     public Company createCompany(Company newCompany) {
         newCompany.setId(null);
         return companyRepository.save(newCompany);

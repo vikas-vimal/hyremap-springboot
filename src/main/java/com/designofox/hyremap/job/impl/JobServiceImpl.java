@@ -33,11 +33,9 @@ public class JobServiceImpl implements JobService {
     public Job createJob(Job job) {
         if(job.getCompany() == null) return null;
         Long cid = job.getCompany().getId();
-        if(cid == null){
-            return null;
-        }
-        Company c = this.companyService.findCompanyById(cid);
-        if(c==null) return null;
+        if(cid == null) return null;
+        boolean companyExists = this.companyService.companyExistsById(cid);
+        if(!companyExists) return null;
         job.setId(null);
         jobRepository.save(job);
         return job;
