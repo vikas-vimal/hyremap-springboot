@@ -1,6 +1,7 @@
 package com.designofox.hyremap.company;
 
 import com.designofox.hyremap.job.Job;
+import com.designofox.hyremap.review.Review;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
@@ -21,10 +22,21 @@ public class Company {
     @OneToMany(mappedBy = "company")
     private List<Job> jobs;
 
-//    @OneToMany
-//    private List<Review> reviews;
+    @JsonIgnore
+    @OneToMany(mappedBy = "company")
+    private List<Review> reviews;
 
     public Company(){}
+
+    public Company(Long id, String name, String description, int employeeCount, String location, List<Job> jobs, List<Review> reviews) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.employeeCount = employeeCount;
+        this.location = location;
+        this.jobs = jobs;
+        this.reviews = reviews;
+    }
 
     public Long getId() {
         return id;
@@ -73,4 +85,13 @@ public class Company {
     public void setJobs(List<Job> jobs) {
         this.jobs = jobs;
     }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
 }
