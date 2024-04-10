@@ -1,5 +1,7 @@
 package com.designofox.hyremap.job.impl;
 
+import com.designofox.hyremap.company.Company;
+import com.designofox.hyremap.company.CompanyService;
 import com.designofox.hyremap.job.Job;
 import com.designofox.hyremap.job.JobRepository;
 import com.designofox.hyremap.job.JobService;
@@ -15,9 +17,11 @@ public class JobServiceImpl implements JobService {
 //    private List<Job> jobsDatabase = new ArrayList<>();
 //    private Long nextId = 1L;
     JobRepository jobRepository;
+    CompanyService companyService;
 
-    public JobServiceImpl(JobRepository jobRepository) {
+    public JobServiceImpl(JobRepository jobRepository, CompanyService companyService) {
         this.jobRepository = jobRepository;
+        this.companyService = companyService;
     }
 
     @Override
@@ -26,10 +30,17 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public boolean createJob(Job job) {
+    public Job createJob(Job job) {
+        if(job.getCompany() == null) return null;
+        Long cid = job.getCompany().getId();
+        if(cid == null){
+            return null;
+        }
+        Company c = this.companyService.findCompanyById(cid);
+        if(c==null) return null;
         job.setId(null);
         jobRepository.save(job);
-        return true;
+        return job;
     }
 
     @Override

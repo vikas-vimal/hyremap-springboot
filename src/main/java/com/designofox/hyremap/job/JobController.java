@@ -31,12 +31,12 @@ public class JobController {
 
     @PostMapping
     public ResponseEntity<String> createJob(@RequestBody Job job){
-        boolean result = jobService.createJob(job);
-        if(result) {
-            return new ResponseEntity<>("Job added successfully!", HttpStatus.CREATED);
+        Job result = jobService.createJob(job);
+        if(result!=null) {
+            return new ResponseEntity<>("Job created successfully!", HttpStatus.CREATED);
         }
         else {
-            return new ResponseEntity<>("Unable to save Job!", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Missing required fields!", HttpStatus.BAD_REQUEST);
         }
     }
 
