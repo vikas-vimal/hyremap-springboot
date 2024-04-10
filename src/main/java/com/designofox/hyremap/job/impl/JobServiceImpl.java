@@ -13,7 +13,7 @@ import java.util.Optional;
 @Service
 public class JobServiceImpl implements JobService {
 //    private List<Job> jobsDatabase = new ArrayList<>();
-    private Long nextId = 1L;
+//    private Long nextId = 1L;
     JobRepository jobRepository;
 
     public JobServiceImpl(JobRepository jobRepository) {
@@ -27,7 +27,7 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public boolean createJob(Job job) {
-        job.setId(nextId++);
+        job.setId(null);
         jobRepository.save(job);
         return true;
     }
@@ -53,6 +53,7 @@ public class JobServiceImpl implements JobService {
         System.out.println(jobOptional.isPresent());
         if(jobOptional.isPresent()){
             Job job = jobOptional.get();
+            job.setId(id);
             job.setTitle(body.getTitle());
             job.setDescription(body.getDescription());
             job.setMinSalary(body.getMinSalary());
