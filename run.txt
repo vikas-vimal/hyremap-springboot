@@ -1,0 +1,32 @@
+docker network create spring-hyremap
+
+docker run -d --name spring-hm-postgres \
+--network spring-hyremap \
+-e POSTGRES_PASSWORD=local \
+-e POSTGRES_USER=admin \
+-e POSTGRES_DB=hyremap \
+-p 5432:5432 \
+postgres
+
+docker run -d --name spring-hm-pgadmin \
+--network spring-hyremap \
+-e PGADMIN_DEFAULT_EMAIL=admin@admin.com \
+-e PGADMIN_DEFAULT_PASSWORD=admin \
+-e PGADMIN_LISTEN_PORT=6432 \
+-p 6432:6432 \
+elestio/pgadmin
+
+
+docker run -d --name pg-spring-hm \
+-e POSTGRES_PASSWORD=local \
+-e POSTGRES_USER=admin \
+-e POSTGRES_DB=hyremap \
+-p "172.17.0.1:5432":5432 \
+postgres
+
+docker run -d --name pgadmin-spring-hm \
+-e PGADMIN_DEFAULT_EMAIL=admin@admin.com \
+-e PGADMIN_DEFAULT_PASSWORD=admin \
+-e PGADMIN_LISTEN_PORT=6432 \
+-p "172.17.0.1:6432":6432 \
+elestio/pgadmin

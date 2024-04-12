@@ -38,7 +38,7 @@ public class ReviewController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Review> updateReviewById(@PathVariable Long companyId, @PathVariable Long id, @RequestBody Review body){
-        Review updated = this.reviewService.updateReviewById(id, body);
+        Review updated = this.reviewService.updateReviewById(companyId, id, body);
         if(updated!=null){
             return ResponseEntity.ok(updated);
         }
@@ -47,7 +47,7 @@ public class ReviewController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteReviewById(@PathVariable Long companyId, @PathVariable Long id){
-        boolean deleted = this.reviewService.deleteReviewById(id);
+        boolean deleted = this.reviewService.deleteReviewById(companyId, id);
         if(deleted) return ResponseEntity.ok("Review deleted successfully!");
         return new ResponseEntity<>("Unable to delete review!", HttpStatus.INTERNAL_SERVER_ERROR);
     }

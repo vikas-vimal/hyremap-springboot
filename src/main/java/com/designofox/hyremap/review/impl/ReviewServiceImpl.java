@@ -46,7 +46,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Review updateReviewById(Long id, Review body) {
+    public Review updateReviewById(Long companyId, Long id, Review body) {
         Optional<Review> foundReview = this.reviewRepository.findById(id);
         if(foundReview.isPresent()){
             Review review = foundReview.get();
@@ -62,7 +62,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public boolean deleteReviewById(Long id) {
+    public boolean deleteReviewById(Long companyId, Long id) {
         try {
             this.reviewRepository.deleteById(id);
             return true;

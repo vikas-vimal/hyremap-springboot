@@ -1,0 +1,25 @@
+version: '3'
+services:
+  spring_hm_postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: local
+      POSTGRES_DB: hyremap
+    ports:
+      - "5432:5432"
+
+  spring_hm_pgadmin:
+    image: elestio/pgadmin:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_LISTEN_PORT: 6432
+    ports:
+      - "6432:6432"
+
+#  spring_hm_app:
+#    build:
+#      dockerfile: Dockerfile
+#    ports:
+#      - "5050:5050"
